@@ -31,12 +31,14 @@ def get_bias_explanation(metrics: dict) -> str:
     }
 
     headers = {
-        "Content-Type": "application/json",
-        "X-goog-api-key": GEMINI_API_KEY
+        "Content-Type": "application/json"
+    }
+    params = {
+        "key": GEMINI_API_KEY
     }
 
     try:
-        response = requests.post(GEMINI_URL, json=payload, headers=headers)
+        response = requests.post(GEMINI_URL, params=params, json=payload, headers=headers)
         response.raise_for_status()
         data = response.json()
         if "candidates" in data and len(data["candidates"]) > 0:
@@ -44,5 +46,7 @@ def get_bias_explanation(metrics: dict) -> str:
             if "content" in candidate and "parts" in candidate["content"]:
                 return candidate["content"]["parts"][0]["text"]
         return "Unable to extract explanation from response."
+    except requests.HTTPError as e:
+        return f"Error connecting to Gemini API: {response.status_code} {response.reason} - {response.text}"
     except Exception as e:
         return f"Error connecting to Gemini API: {str(e)}"
