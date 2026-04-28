@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './index.css';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 function App() {
   const [file, setFile] = useState(null);
   const [columns, setColumns] = useState([]);
@@ -18,7 +20,7 @@ function App() {
     const formData = new FormData();
     formData.append('file', uploadedFile);
 
-    const res = await fetch('http://localhost:8000/upload', {
+    const res = await fetch(`${API_BASE_URL}/upload`, {
       method: 'POST',
       body: formData
     });
@@ -33,7 +35,7 @@ function App() {
     formData.append('target', target);
     formData.append('sensitive', sensitive);
 
-    const res = await fetch('http://localhost:8000/analyze', {
+    const res = await fetch(`${API_BASE_URL}/analyze`, {
       method: 'POST',
       body: formData
     });
