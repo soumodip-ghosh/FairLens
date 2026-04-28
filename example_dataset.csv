@@ -1,0 +1,11 @@
+income,credit_score,age,gender,loan_approved
+55000,650,28,Male,0
+85000,720,35,Female,1
+42000,580,22,Male,0
+120000,800,45,Female,1
+60000,610,30,Male,1
+45000,590,25,Female,0
+95000,750,40,Male,1
+38000,540,21,Female,0
+110000,780,50,Male,1
+62000,660,32,Female,1
