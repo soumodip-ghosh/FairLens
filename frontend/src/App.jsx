@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './index.css';
 
 function App() {
@@ -103,6 +104,23 @@ function App() {
               {/* Metrics Box */}
               <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
                 <h3 className="text-lg font-bold mb-4">Fairness Metrics</h3>
+                <div className="mb-6">
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart data={[
+                      { name: 'Group A Rep', value: results.metrics['Group A representation'] },
+                      { name: 'Group B Rep', value: results.metrics['Group B representation'] },
+                      { name: 'Dem Parity Diff', value: Math.abs(results.metrics['Demographic Parity Difference']) },
+                      { name: 'Disp Impact Ratio', value: results.metrics['Disparate Impact Ratio'] },
+                      { name: 'Equal Opp Diff', value: Math.abs(results.metrics['Equal Opportunity Difference']) }
+                    ]}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <Tooltip />
+                      <Bar dataKey="value" fill="#3b82f6" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
                 <ul className="space-y-3">
                   {Object.entries(results.metrics).map(([key, value]) => (
                     <li key={key} className="flex justify-between text-sm">
